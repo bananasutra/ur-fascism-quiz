@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Rate Umberto Eco's 14 Ur-Fascism traits on current U.S. federal policy, then compare your scores to ChatGPT (Sept 2025 vs Mar 2026), Gemini, and Claude—with documented evidence.">
 <meta name="theme-color" content="#f7f4ef">
-<title>Ur-Fascism Quiz — Rate the 14 Traits</title>
+<title>14 Traits. You Decide. — Ur-Fascism Scorecard Quiz</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -40,7 +40,7 @@
   .progress-track {
     position: fixed;
     top: 0; left: 0; right: 0;
-    height: 3px;
+    height: 12px;
     background: var(--border);
     z-index: 100;
   }
@@ -65,21 +65,16 @@
   /* ── INTRO ── */
   .intro-eyebrow {
     font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--muted);
     margin-bottom: 1rem;
   }
   .intro-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 5vw, 42px);
+    font-size: clamp(28px, 5vw, 40px);
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1rem;
-  }
-  .intro-title em {
-    font-style: italic;
-    color: var(--systemic);
   }
   .intro-body {
     color: var(--muted);
@@ -127,6 +122,7 @@
     font-size: 13px;
     color: var(--muted);
     margin-bottom: 1.5rem;
+    text-align: center;
   }
   .btn-primary {
     display: block;
@@ -158,7 +154,8 @@
     color: var(--muted);
   }
   .trait-counter {
-    font-size: 11px;
+    font-size: 13px;
+    font-weight: 500;
     color: var(--muted);
   }
   .trait-name {
@@ -222,17 +219,16 @@
     display: none;
     width: 100%;
     padding: 13px;
-    background: var(--text);
-    color: var(--bg);
-    border: none;
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
     border-radius: 10px;
     font-family: 'DM Sans', sans-serif;
     font-size: 15px;
-    font-weight: 500;
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: border-color 0.15s;
   }
-  .btn-reveal:hover { opacity: 0.88; }
+  .btn-reveal:hover { border-color: var(--text); }
   .btn-reveal.visible { display: block; }
 
   /* ── ACT 2 ── */
@@ -365,36 +361,42 @@
   }
   .eco-quote strong { font-style: normal; font-weight: 500; color: var(--text); }
 
-  .nav-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+  .act3-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  .act3-nav .btn-next {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 15px;
   }
   .btn-next {
-    padding: 13px;
     background: var(--text);
     color: var(--bg);
     border: none;
     border-radius: 10px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
     font-weight: 500;
     cursor: pointer;
     transition: opacity 0.15s;
   }
   .btn-next:hover { opacity: 0.88; }
-  .btn-skip {
-    padding: 13px;
-    background: var(--card);
-    color: var(--muted);
-    border: 1px solid var(--border);
-    border-radius: 10px;
+  .act3-skip {
+    align-self: center;
+    padding: 6px 4px;
+    background: none;
+    border: none;
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
+    color: var(--muted);
     cursor: pointer;
-    transition: border-color 0.15s;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
-  .btn-skip:hover { border-color: var(--text); color: var(--text); }
+  .act3-skip:hover { color: var(--text); }
 
   /* ── SUMMARY ── */
   .summary-title {
@@ -430,23 +432,118 @@
     margin-bottom: 4px;
   }
   .score-card-lbl { font-size: 11px; color: var(--muted); line-height: 1.3; }
-  .drift-section-title {
-    font-size: 12px;
-    letter-spacing: 0.1em;
+  .score-card-lbl-note {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 5px;
+    color: var(--muted);
+    line-height: 1.25;
+  }
+  .gpt-analysis {
+    margin-bottom: 1.75rem;
+  }
+  .gpt-analysis-lede {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    padding: 1rem 1.15rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .gpt-analysis-lede p { margin: 0 0 0.65rem; }
+  .gpt-analysis-lede p:last-child { margin-bottom: 0; }
+  .gpt-analysis-lede strong { font-weight: 500; }
+  .gpt-analysis-lede-note {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+  h3.gpt-analysis-sub {
+    font-size: 11px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 0.75rem;
+    margin: 1.35rem 0 0.6rem;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
   }
-  .drift-bar-row {
+  h3.gpt-analysis-sub:first-of-type { margin-top: 0.25rem; }
+  .gpt-drop-list {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    overflow: hidden;
+  }
+  .gpt-drop-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 14px;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .gpt-drop-row:last-child { border-bottom: none; }
+  .gpt-drop-name {
+    flex: 1 1 160px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .gpt-drop-scores {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 8px;
+    flex-shrink: 0;
   }
-  .drift-bar-name { font-size: 12px; color: var(--muted); width: 160px; flex-shrink: 0; }
-  .drift-bar-track { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
-  .drift-bar-fill { height: 100%; border-radius: 4px; background: var(--drift); }
-  .drift-bar-val { font-size: 12px; color: var(--drift); width: 36px; text-align: right; flex-shrink: 0; }
+  .gpt-drop-arrow {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 0 1px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .score-chip {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    border: 1px solid transparent;
+  }
+  .score-chip.sc-0 { background: var(--absent-bg); color: var(--absent); border-color: rgba(74, 72, 69, 0.35); }
+  .score-chip.sc-1 { background: var(--partial-bg); color: var(--partial); border-color: rgba(138, 90, 10, 0.4); }
+  .score-chip.sc-2 { background: var(--systemic-bg); color: var(--systemic); border-color: rgba(155, 32, 32, 0.35); }
+  .gpt-same-block {
+    padding: 1rem 1.15rem;
+    background: #faf9f7;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .gpt-same-block strong { color: var(--text); font-weight: 500; }
   .summary-cta {
     margin-top: 1.75rem;
     padding: 1.25rem;
@@ -456,9 +553,24 @@
     text-align: center;
   }
   .summary-cta p { font-size: 14px; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+  .summary-quitgpt {
+    text-align: left;
+    padding-top: 1rem;
+    margin-top: 1.25rem !important;
+    margin-bottom: 0 !important;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .summary-quitgpt-hash {
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
   .btn-article {
     display: inline-block;
-    padding: 12px 24px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 12px 20px;
     background: var(--text);
     color: var(--bg);
     border: none;
@@ -466,6 +578,8 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
     font-weight: 500;
+    line-height: 1.35;
+    text-align: center;
     cursor: pointer;
     text-decoration: none;
     transition: opacity 0.15s;
@@ -491,7 +605,8 @@
   @media (max-width: 480px) {
     .ai-grid { grid-template-columns: 1fr; }
     .score-cards { grid-template-columns: repeat(2, 1fr); }
-    .drift-bar-name { width: 120px; font-size: 11px; }
+    .gpt-drop-row { flex-direction: column; align-items: flex-start; }
+    .gpt-drop-scores { width: 100%; justify-content: flex-start; }
   }
 </style>
 </head>
@@ -505,26 +620,26 @@
 
   <!-- INTRO -->
   <div class="screen active" id="s-intro">
-    <p class="intro-eyebrow">Umberto Eco · Ur-Fascism · 1995</p>
-    <h1 class="intro-title">Are you seeing what<br><em>I'm</em> seeing?</h1>
-    <p class="intro-body">In 1995, Umberto Eco identified 14 traits common to fascist regimes. In March 2026, I ran U.S. federal policy through that framework using three AI systems. ChatGPT dropped its score by 9 points. Gemini and Claude scored 28 out of 28.<br><br>Rate each trait yourself. Then see if you reach the same conclusion I did.</p>
+    <p class="intro-eyebrow">#QuitGPT · Ur-Fascism Scorecard Quiz · March 2026</p>
+    <h1 class="intro-title">14 Traits. You Decide.</h1>
+    <p class="intro-body">In 1995, Umberto Eco identified 14 traits common to fascist regimes. In March 2026, I ran U.S. federal policy through that framework using three AI systems. ChatGPT dropped its score by 9 points. Gemini and Claude scored 28 out of 28.<br><br>Rate each trait yourself. Then reach your own conclusion.</p>
     <div class="how-it-works">
       <p class="how-it-works-title">How it works</p>
       <div class="how-step">
         <span class="step-num">1</span>
-        <span>You rate each trait: 0 = absent · 1 = partial · 2 = systemic</span>
+        <span>Rate each trait: 0 = absent · 1 = partial · 2 = systemic</span>
       </div>
       <div class="how-step">
         <span class="step-num">2</span>
-        <span>Three AI systems reveal their scores and reasoning</span>
+        <span>See the comparative AI systems&rsquo; score assessments</span>
       </div>
       <div class="how-step">
         <span class="step-num">3</span>
-        <span>Documented facts from the public record surface as evidence</span>
+        <span>Learn about the traits of fascism in the United States in 2025&ndash;2026</span>
       </div>
     </div>
-    <p class="meta-line">14 traits · ~15 minutes · no right or wrong answers in step 1</p>
-    <button type="button" class="btn-primary" onclick="startQuiz()">Begin</button>
+    <p class="meta-line">14 traits · ~1 minute per trait</p>
+    <button type="button" class="btn-primary" onclick="startQuiz()">Let&rsquo;s do it</button>
   </div>
 
   <!-- ACT 1 -->
@@ -550,7 +665,7 @@
         <span class="rating-label">Systemic</span>
       </button>
     </div>
-    <button type="button" class="btn-reveal" id="btn-reveal" onclick="show('s-act2')">See AI scores</button>
+    <button type="button" class="btn-reveal" id="btn-reveal" onclick="show('s-act2')">See AI scores →</button>
   </div>
 
   <!-- ACT 2 -->
@@ -597,9 +712,9 @@
     <p class="evidence-title">Documented actions from the public record</p>
     <div id="evidence-list"></div>
     <div class="eco-quote" id="eco-quote"></div>
-    <div class="nav-row">
+    <div class="act3-nav">
       <button type="button" class="btn-next" onclick="nextTrait()">Rate next trait</button>
-      <button type="button" class="btn-skip" onclick="skipToSummary()">Skip to summary</button>
+      <button type="button" class="act3-skip" onclick="skipToSummary()">Skip to summary</button>
     </div>
   </div>
 
@@ -623,16 +738,16 @@
       </div>
       <div class="score-card">
         <span class="score-card-val" id="sum-gc" style="color:var(--systemic)">—</span>
-        <span class="score-card-lbl">Gemini<br>+ Claude</span>
+        <span class="score-card-lbl">Gemini<br>+ Claude<span class="score-card-lbl-note">Mar &rsquo;26 only</span></span>
       </div>
     </div>
-    <p class="drift-section-title">GPT drift — Sept 2025 → Mar 2026</p>
-    <div id="drift-bars"></div>
+    <div class="gpt-analysis" id="gpt-analysis" role="region" aria-label="ChatGPT September 2025 versus March 2026, trait by trait"></div>
     <div class="summary-cta">
-      <p>The framework is Eco's. The data is public. The judgment is yours.<br>Read the full story behind this quiz.</p>
+      <p>The framework is Eco's. The data is public. The judgment is yours.</p>
       <!-- Replace href with your post URL when the article is live, e.g. https://bananasutra.substack.com/p/slug -->
-      <a class="btn-article" href="https://bananasutra.substack.com" target="_blank" rel="noopener noreferrer">Read the article →</a>
+      <a class="btn-article" href="https://bananasutra.substack.com" target="_blank" rel="noopener noreferrer">Read the full story behind this quiz →</a>
       <button type="button" class="btn-restart" onclick="restartQuiz()">Take the quiz again</button>
+      <p class="summary-quitgpt"><strong class="summary-quitgpt-hash">#QuitGPT</strong> is not a recommendation to find a better chatbot. It is a human imperative. The article walks through what that means—and how this quiz fits in.</p>
     </div>
   </div>
 
@@ -749,6 +864,59 @@ function skipToSummary() {
   showSummary();
 }
 
+function scoreChip(v) {
+  return '<span class="score-chip sc-' + v + '" title="' + ['Absent', 'Partial', 'Systemic'][v] + '">' + v + '</span>';
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderGptAnalysis() {
+  const drops = [];
+  const sames = [];
+  TRAITS.forEach(t => {
+    const o = t.scores.gptSept2025;
+    const n = t.scores.gptMar2026;
+    if (n < o) drops.push({ name: t.name, from: o, to: n });
+    else sames.push({ name: t.name, score: o });
+  });
+
+  const lede =
+    '<div class="gpt-analysis-lede">' +
+    '<p><strong>What changed for ChatGPT?</strong> Using the same Eco framework and updated documented policy, its <em>total</em> fell from ' +
+    '<strong>' + SCORE_TOTALS.gptSept2025 + '</strong> to <strong>' + SCORE_TOTALS.gptMar2026 + '</strong> out of 28.</p>' +
+    '<span class="gpt-analysis-lede-note">Each row is one trait. Chips are ChatGPT&rsquo;s scores (0 = absent, 1 = partial, 2 = systemic). ' +
+    'A lower March score means the model rated the trait as <em>less</em> present than before—not that the underlying public record got milder.</span>' +
+    '</div>';
+
+  const dropRows = drops.map(d =>
+    '<div class="gpt-drop-row">' +
+    '<span class="gpt-drop-name">' + escapeHtml(d.name) + '</span>' +
+    '<span class="gpt-drop-scores">' +
+    scoreChip(d.from) +
+    '<span class="gpt-drop-arrow" aria-hidden="true">→</span>' +
+    scoreChip(d.to) +
+    '</span></div>'
+  ).join('');
+
+  const sameParts = sames.map(s =>
+    '<strong>' + escapeHtml(s.name) + '</strong> (' + s.score + ' both runs)'
+  );
+
+  return (
+    lede +
+    '<h3 class="gpt-analysis-sub">Lower score in March 2026 (' + drops.length + ' traits)</h3>' +
+    '<div class="gpt-drop-list">' + dropRows + '</div>' +
+    '<h3 class="gpt-analysis-sub">Same score both times (' + sames.length + ' traits)</h3>' +
+    '<div class="gpt-same-block"><p>' + sameParts.join(' · ') + '</p></div>'
+  );
+}
+
 function showSummary() {
   const total = scores.reduce((a,b) => a + (b||0), 0);
   const rated = scores.filter(s => s !== undefined).length;
@@ -760,11 +928,7 @@ function showSummary() {
     ? `You rated ${rated} of ${TRAITS.length} traits. Your total: ${total}/28.`
     : `You rated all ${TRAITS.length} traits. Your total: ${total}/28.`;
 
-  const driftEl = document.getElementById('drift-bars');
-  driftEl.innerHTML = GPT_DRIFT.map(d => {
-    const w = Math.round(((d.from - d.to) / 2) * 100);
-    return '<div class="drift-bar-row"><span class="drift-bar-name">' + d.trait + '</span><div class="drift-bar-track"><div class="drift-bar-fill" style="width:' + w + '%"></div></div><span class="drift-bar-val">' + d.from + '→' + d.to + '</span></div>';
-  }).join('');
+  document.getElementById('gpt-analysis').innerHTML = renderGptAnalysis();
 
   setProgressPct(100);
   show('s-summary');

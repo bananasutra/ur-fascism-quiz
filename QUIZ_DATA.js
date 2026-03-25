@@ -251,7 +251,7 @@ const SCORE_TOTALS = {
   geminiClaude: 28
 };
 
-// Traits with largest GPT drift (for summary bar chart)
+// Reference list of traits where GPT lowered its score (same rows as derived from TRAITS in the live quiz summary)
 const GPT_DRIFT = [
   { trait: "Cult of heroism", from: 1, to: 0 },
   { trait: "Action over reflection", from: 2, to: 1 },
