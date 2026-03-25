@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Rate Umberto Eco's 14 Ur-Fascism traits on current U.S. federal policy, then compare your scores to ChatGPT (Sept 2025 vs Mar 2026), Gemini, and Claude—with documented evidence.">
+<meta name="theme-color" content="#f7f4ef">
+<title>Ur-Fascism Quiz — Rate the 14 Traits</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #f7f4ef;
+    --card: #ffffff;
+    --text: #1a1814;
+    --muted: #6b6760;
+    --border: #e2ddd6;
+    --absent: #4a4845;
+    --absent-bg: #eeece8;
+    --partial: #8a5a0a;
+    --partial-bg: #fdf3e0;
+    --systemic: #9b2020;
+    --systemic-bg: #fdf0f0;
+    --drift: #c0392b;
+    --accent: #1a1814;
+    --progress: #9b2020;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .progress-track {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--border);
+    z-index: 100;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--progress);
+    transition: width 0.5s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill { transition: none; }
+  }
+
+  .shell {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── INTRO ── */
+  .intro-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .intro-title em {
+    font-style: italic;
+    color: var(--systemic);
+  }
+  .intro-body {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 1.75rem;
+    line-height: 1.7;
+  }
+  .how-it-works {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.75rem;
+    background: var(--card);
+  }
+  .how-it-works-title {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .how-step {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    font-size: 14px;
+  }
+  .how-step:last-child { margin-bottom: 0; }
+  .step-num {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .meta-line {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+
+  /* ── TRAIT HEADER (persists across all 3 acts) ── */
+  .trait-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.35rem;
+  }
+  .act-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .trait-counter {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .trait-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── ACT 1 ── */
+  .definition-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    font-style: italic;
+  }
+  .rating-prompt {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .rating-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .rating-btn {
+    padding: 12px 8px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .rating-btn:hover { border-color: var(--text); }
+  .rating-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .rating-label { font-size: 12px; color: var(--muted); }
+  .rating-btn.sel-0 { border-color: var(--absent); background: var(--absent-bg); }
+  .rating-btn.sel-0 .rating-num { color: var(--absent); }
+  .rating-btn.sel-1 { border-color: var(--partial); background: var(--partial-bg); }
+  .rating-btn.sel-1 .rating-num { color: var(--partial); }
+  .rating-btn.sel-2 { border-color: var(--systemic); background: var(--systemic-bg); }
+  .rating-btn.sel-2 .rating-num { color: var(--systemic); }
+
+  .btn-reveal {
+    display: none;
+    width: 100%;
+    padding: 13px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-reveal:hover { opacity: 0.88; }
+  .btn-reveal.visible { display: block; }
+
+  /* ── ACT 2 ── */
+  .your-score-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 14px;
+  }
+  .your-score-label { color: var(--muted); }
+  .your-score-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .your-score-text { color: var(--muted); font-size: 13px; }
+  .score-0-color { color: var(--absent); }
+  .score-1-color { color: var(--partial); }
+  .score-2-color { color: var(--systemic); }
+
+  .ai-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+  .ai-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.875rem;
+    background: var(--card);
+  }
+  .ai-card.drifted {
+    border-color: #e8a0a0;
+    background: #fff8f8;
+    opacity: 0.88;
+  }
+  .ai-card-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .ai-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .ai-reason { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+  .drift-note {
+    background: #fdf7f0;
+    border: 1px solid #f0d9b8;
+    border-radius: 10px;
+    padding: 0.875rem 1rem;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    line-height: 1.55;
+  }
+  .drift-note strong { color: var(--text); font-weight: 500; }
+
+  .btn-evidence {
+    width: 100%;
+    padding: 13px;
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .btn-evidence:hover { border-color: var(--text); }
+
+  .btn-back {
+    display: block;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 11px;
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .btn-back:hover { color: var(--text); }
+
+  /* ── ACT 3 ── */
+  .evidence-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .evidence-item {
+    border-left: 2px solid var(--border);
+    padding: 0.5rem 0.875rem;
+    margin-bottom: 0.75rem;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .evidence-item strong { color: var(--text); font-weight: 500; }
+  .eco-quote {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+    background: var(--card);
+  }
+  .eco-quote strong { font-style: normal; font-weight: 500; color: var(--text); }
+
+  .nav-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .btn-next {
+    padding: 13px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-next:hover { opacity: 0.88; }
+  .btn-skip {
+    padding: 13px;
+    background: var(--card);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .btn-skip:hover { border-color: var(--text); color: var(--text); }
+
+  /* ── SUMMARY ── */
+  .summary-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+  .summary-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .score-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  .score-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.875rem 0.5rem;
+    text-align: center;
+  }
+  .score-card.you { border-color: var(--text); }
+  .score-card-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .score-card-lbl { font-size: 11px; color: var(--muted); line-height: 1.3; }
+  .drift-section-title {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .drift-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .drift-bar-name { font-size: 12px; color: var(--muted); width: 160px; flex-shrink: 0; }
+  .drift-bar-track { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .drift-bar-fill { height: 100%; border-radius: 4px; background: var(--drift); }
+  .drift-bar-val { font-size: 12px; color: var(--drift); width: 36px; text-align: right; flex-shrink: 0; }
+  .summary-cta {
+    margin-top: 1.75rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    text-align: center;
+  }
+  .summary-cta p { font-size: 14px; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+  .btn-article {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .btn-article:hover { opacity: 0.88; }
+
+  .btn-restart {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .btn-restart:hover { color: var(--text); }
+
+  @media (max-width: 480px) {
+    .ai-grid { grid-template-columns: 1fr; }
+    .score-cards { grid-template-columns: repeat(2, 1fr); }
+    .drift-bar-name { width: 120px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-wrap">
+  <div class="progress-fill" id="progress" style="width:0%"></div>
+</div>
+
+<main class="shell" id="main">
+
+  <!-- INTRO -->
+  <div class="screen active" id="s-intro">
+    <p class="intro-eyebrow">Umberto Eco · Ur-Fascism · 1995</p>
+    <h1 class="intro-title">Are you seeing what<br><em>I'm</em> seeing?</h1>
+    <p class="intro-body">In 1995, Umberto Eco identified 14 traits common to fascist regimes. In March 2026, I ran U.S. federal policy through that framework using three AI systems. ChatGPT dropped its score by 9 points. Gemini and Claude scored 28 out of 28.<br><br>Rate each trait yourself. Then see if you reach the same conclusion I did.</p>
+    <div class="how-it-works">
+      <p class="how-it-works-title">How it works</p>
+      <div class="how-step">
+        <span class="step-num">1</span>
+        <span>You rate each trait: 0 = absent · 1 = partial · 2 = systemic</span>
+      </div>
+      <div class="how-step">
+        <span class="step-num">2</span>
+        <span>Three AI systems reveal their scores and reasoning</span>
+      </div>
+      <div class="how-step">
+        <span class="step-num">3</span>
+        <span>Documented facts from the public record surface as evidence</span>
+      </div>
+    </div>
+    <p class="meta-line">14 traits · ~15 minutes · no right or wrong answers in step 1</p>
+    <button type="button" class="btn-primary" onclick="startQuiz()">Begin</button>
+  </div>
+
+  <!-- ACT 1 -->
+  <div class="screen" id="s-act1">
+    <div class="trait-meta">
+      <span class="act-label" id="lbl1">Act 1 of 3 — Your rating</span>
+      <span class="trait-counter" id="ctr1"></span>
+    </div>
+    <h2 class="trait-name" id="name1"></h2>
+    <div class="definition-card" id="def1"></div>
+    <p class="rating-prompt">How present is this trait in current U.S. federal policy?</p>
+    <div class="rating-row">
+      <button type="button" class="rating-btn" id="r0" onclick="rate(0)" aria-pressed="false">
+        <span class="rating-num">0</span>
+        <span class="rating-label">Absent</span>
+      </button>
+      <button type="button" class="rating-btn" id="r1" onclick="rate(1)" aria-pressed="false">
+        <span class="rating-num">1</span>
+        <span class="rating-label">Partial</span>
+      </button>
+      <button type="button" class="rating-btn" id="r2" onclick="rate(2)" aria-pressed="false">
+        <span class="rating-num">2</span>
+        <span class="rating-label">Systemic</span>
+      </button>
+    </div>
+    <button type="button" class="btn-reveal" id="btn-reveal" onclick="show('s-act2')">See AI scores</button>
+  </div>
+
+  <!-- ACT 2 -->
+  <div class="screen" id="s-act2">
+    <div class="trait-meta">
+      <span class="act-label" id="lbl2">Act 2 of 3 — AI comparison</span>
+      <span class="trait-counter" id="ctr2"></span>
+    </div>
+    <h2 class="trait-name" id="name2"></h2>
+    <div class="your-score-bar">
+      <span class="your-score-label">Your score</span>
+      <span class="your-score-val" id="u-val"></span>
+      <span class="your-score-text" id="u-text"></span>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-card" id="card-gpt-old">
+        <div class="ai-card-label">ChatGPT<br>Sept 2025</div>
+        <span class="ai-score" id="s-gpt-old"></span>
+        <div class="ai-reason" id="r-gpt-old"></div>
+      </div>
+      <div class="ai-card" id="card-gpt-new">
+        <div class="ai-card-label">ChatGPT<br>Mar 2026</div>
+        <span class="ai-score" id="s-gpt-new"></span>
+        <div class="ai-reason" id="r-gpt-new"></div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-label">Gemini +<br>Claude</div>
+        <span class="ai-score" id="s-gc"></span>
+        <div class="ai-reason" id="r-gc"></div>
+      </div>
+    </div>
+    <div class="drift-note" id="drift-note"></div>
+    <button type="button" class="btn-evidence" onclick="show('s-act3')">See documented evidence →</button>
+    <button type="button" class="btn-back" onclick="show('s-act1')">← Change my rating</button>
+  </div>
+
+  <!-- ACT 3 -->
+  <div class="screen" id="s-act3">
+    <div class="trait-meta">
+      <span class="act-label" id="lbl3">Act 3 of 3 — Evidence</span>
+      <span class="trait-counter" id="ctr3"></span>
+    </div>
+    <h2 class="trait-name" id="name3"></h2>
+    <p class="evidence-title">Documented actions from the public record</p>
+    <div id="evidence-list"></div>
+    <div class="eco-quote" id="eco-quote"></div>
+    <div class="nav-row">
+      <button type="button" class="btn-next" onclick="nextTrait()">Rate next trait</button>
+      <button type="button" class="btn-skip" onclick="skipToSummary()">Skip to summary</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="screen" id="s-summary">
+    <p class="act-label" style="margin-bottom:0.5rem">Your results</p>
+    <h2 class="summary-title">Scorecard</h2>
+    <p class="summary-sub" id="summary-sub"></p>
+    <div class="score-cards">
+      <div class="score-card you">
+        <span class="score-card-val" id="sum-you" style="color:var(--text)">—</span>
+        <span class="score-card-lbl">Your<br>score</span>
+      </div>
+      <div class="score-card">
+        <span class="score-card-val" id="sum-gpt-sept" style="color:var(--partial)">—</span>
+        <span class="score-card-lbl">GPT<br>Sept '25</span>
+      </div>
+      <div class="score-card">
+        <span class="score-card-val" id="sum-gpt-mar" style="color:var(--drift)">—</span>
+        <span class="score-card-lbl">GPT<br>Mar '26</span>
+      </div>
+      <div class="score-card">
+        <span class="score-card-val" id="sum-gc" style="color:var(--systemic)">—</span>
+        <span class="score-card-lbl">Gemini<br>+ Claude</span>
+      </div>
+    </div>
+    <p class="drift-section-title">GPT drift — Sept 2025 → Mar 2026</p>
+    <div id="drift-bars"></div>
+    <div class="summary-cta">
+      <p>The framework is Eco's. The data is public. The judgment is yours.<br>Read the full story behind this quiz.</p>
+      <!-- Replace href with your post URL when the article is live, e.g. https://bananasutra.substack.com/p/slug -->
+      <a class="btn-article" href="https://bananasutra.substack.com" target="_blank" rel="noopener noreferrer">Read the article →</a>
+      <button type="button" class="btn-restart" onclick="restartQuiz()">Take the quiz again</button>
+    </div>
+  </div>
+
+</main>
+
+<script src="QUIZ_DATA.js"></script>
+<script>
+let cur = 0;
+let scores = [];
+const labels = ['Absent', 'Partial / rhetoric', 'Strong / systemic'];
+const scoreColors = ['score-0-color','score-1-color','score-2-color'];
+
+function formatEvidenceLine(text) {
+  const parts = text.split(' — ');
+  if (parts.length >= 2) {
+    return '<strong>' + parts[0] + '</strong> — ' + parts.slice(1).join(' — ');
+  }
+  return text;
+}
+
+function setProgressPct(pct) {
+  const w = Math.min(100, Math.max(0, Math.round(pct)));
+  document.getElementById('progress').style.width = w + '%';
+  const wrap = document.getElementById('progress-wrap');
+  wrap.setAttribute('aria-valuenow', String(w));
+}
+
+function restartQuiz() {
+  cur = 0;
+  scores = [];
+  setProgressPct(0);
+  show('s-intro');
+}
+
+function startQuiz() {
+  cur = 0;
+  scores = [];
+  setProgressPct(0);
+  loadTrait(0);
+  show('s-act1');
+}
+
+function loadTrait(i) {
+  const t = TRAITS[i];
+  const pct = ((i + 1) / TRAITS.length) * 100;
+  setProgressPct(pct);
+  const ctr = `Trait ${i + 1} of ${TRAITS.length}`;
+  ['lbl1','lbl2','lbl3'].forEach((id,a) => {
+    document.getElementById(id).textContent = `Act ${a+1} of 3 — ` + ['Your rating','AI comparison','Evidence'][a];
+  });
+  ['ctr1','ctr2','ctr3'].forEach(id => document.getElementById(id).textContent = ctr);
+  ['name1','name2','name3'].forEach(id => document.getElementById(id).textContent = t.name);
+  document.getElementById('def1').textContent = t.definition;
+  ['r0','r1','r2'].forEach(id => {
+    const b = document.getElementById(id);
+    b.className = 'rating-btn';
+    b.setAttribute('aria-pressed', 'false');
+  });
+  document.getElementById('btn-reveal').className = 'btn-reveal';
+
+  const gO = t.scores.gptSept2025;
+  const gN = t.scores.gptMar2026;
+  const gC = t.scores.geminiClaude;
+  const drifted = gN < gO;
+  const setScore = (id, val) => {
+    const el = document.getElementById(id);
+    el.textContent = val;
+    el.className = 'ai-score ' + scoreColors[val];
+  };
+  setScore('s-gpt-old', gO);
+  setScore('s-gpt-new', gN);
+  setScore('s-gc', gC);
+  document.getElementById('r-gpt-old').textContent = t.gptSept2025Reason;
+  document.getElementById('r-gpt-new').textContent = t.gptMar2026Reason;
+  document.getElementById('r-gc').textContent = t.geminiClaudeReason;
+  document.getElementById('card-gpt-new').className = drifted ? 'ai-card drifted' : 'ai-card';
+  document.getElementById('drift-note').innerHTML = '<strong>GPT drift:</strong> ' + t.driftNote;
+
+  document.getElementById('evidence-list').innerHTML = t.evidence
+    .map(e => '<div class="evidence-item">' + formatEvidenceLine(e) + '</div>').join('');
+  document.getElementById('eco-quote').innerHTML = '<strong>Eco\'s words:</strong> ' + t.ecoQuote;
+
+  const saved = scores[i];
+  if (saved !== undefined) {
+    rate(saved);
+    document.getElementById('btn-reveal').className = 'btn-reveal visible';
+  }
+}
+
+function rate(val) {
+  ['r0','r1','r2'].forEach((id, n) => {
+    const b = document.getElementById(id);
+    b.className = 'rating-btn' + (n === val ? ' sel-' + val : '');
+    b.setAttribute('aria-pressed', n === val ? 'true' : 'false');
+  });
+  scores[cur] = val;
+  const uv = document.getElementById('u-val');
+  uv.textContent = val;
+  uv.className = 'your-score-val ' + scoreColors[val];
+  document.getElementById('u-text').textContent = labels[val];
+  document.getElementById('btn-reveal').className = 'btn-reveal visible';
+}
+
+function nextTrait() {
+  if (cur < TRAITS.length - 1) { cur++; loadTrait(cur); show('s-act1'); }
+  else showSummary();
+}
+
+function skipToSummary() {
+  const rated = scores.filter(s => s !== undefined).length;
+  if (rated > 0 && rated < TRAITS.length) {
+    if (!confirm('You have not rated all 14 traits yet. Skip to the summary anyway?')) return;
+  }
+  showSummary();
+}
+
+function showSummary() {
+  const total = scores.reduce((a,b) => a + (b||0), 0);
+  const rated = scores.filter(s => s !== undefined).length;
+  document.getElementById('sum-you').textContent = rated > 0 ? total : '—';
+  document.getElementById('sum-gpt-sept').textContent = SCORE_TOTALS.gptSept2025;
+  document.getElementById('sum-gpt-mar').textContent = SCORE_TOTALS.gptMar2026;
+  document.getElementById('sum-gc').textContent = SCORE_TOTALS.geminiClaude;
+  document.getElementById('summary-sub').textContent = rated < TRAITS.length
+    ? `You rated ${rated} of ${TRAITS.length} traits. Your total: ${total}/28.`
+    : `You rated all ${TRAITS.length} traits. Your total: ${total}/28.`;
+
+  const driftEl = document.getElementById('drift-bars');
+  driftEl.innerHTML = GPT_DRIFT.map(d => {
+    const w = Math.round(((d.from - d.to) / 2) * 100);
+    return '<div class="drift-bar-row"><span class="drift-bar-name">' + d.trait + '</span><div class="drift-bar-track"><div class="drift-bar-fill" style="width:' + w + '%"></div></div><span class="drift-bar-val">' + d.from + '→' + d.to + '</span></div>';
+  }).join('');
+
+  setProgressPct(100);
+  show('s-summary');
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
