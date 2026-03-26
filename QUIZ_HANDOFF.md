@@ -130,6 +130,6 @@ The prototype JS data object (`TRAITS` array) is exported in `QUIZ_DATA.js`—us
 ## Contact / repo
 
 Banana's GitHub pipeline is already set up via Cursor.
-Article publishes at: bananasutra.substack.com
+Companion article: https://bananasutra.substack.com/p/openai-gone-bananas-time-to-quitgpt
 Tracker app (reference): trump-actions-tracker.streamlit.app
 
